@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root{
+  max-width: 100%;
+  padding: 0rem;
+  box-sizing: border-box;
+}
+html, body {
+  font-family: 'Roboto Mono', monospace;
+  height: 100%;
+  margin: 0;
+  scroll-behavior: smooth;
+}
