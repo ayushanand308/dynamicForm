@@ -1,6 +1,6 @@
 # Dynamic Form Using ReactJS
 
-This project is a dynamic form built using ReactJS, designed to be responsive across all screen sizes. The form allows for flexible question creation and adapts to various devices, providing an optimal user experience.
+This project is a dynamic form built using ReactJS,
 
 ## Live Demo
 
