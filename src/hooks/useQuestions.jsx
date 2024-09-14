@@ -1,15 +1,22 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const useQuestions = () => {
-  // State to store all questions
-  const [questions, setQuestions] = useState([]);
 
-  // Helper function to generate a unique ID for each question
-  const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
+  const [questions, setQuestions] = useState(() => {
+    const savedQuestions = localStorage.getItem('questions');
+    return savedQuestions ? JSON.parse(savedQuestions) : [];
+  });
+  
+  useEffect(() => {
+    localStorage.setItem('questions', JSON.stringify(questions));
+  }, [questions]);
 
-  // Function to recursively assign numbers to questions based on their hierarchy
+  const generateId = () => uuidv4();
+
   const autoNumberQuestions = useCallback((questions, parentNumber = '') => {
-    if (!Array.isArray(questions)) return []; // Guard clause
+    if (!Array.isArray(questions)) return [];
     
     return questions.map((question, index) => {
       const newNumber = parentNumber ? `${parentNumber}.${index + 1}` : `Q${index + 1}`;
@@ -18,7 +25,6 @@ const useQuestions = () => {
     });
   }, []);
 
-  // Function to add a new question
   const addQuestion = useCallback((parentId = null) => {
     setQuestions((prevQuestions) => {
       const newQuestion = {
@@ -31,11 +37,9 @@ const useQuestions = () => {
       };
 
       if (!parentId) {
-        // Add new parent question
         const updatedQuestions = [...prevQuestions, newQuestion];
         return autoNumberQuestions(updatedQuestions);
       } else {
-        // Add child question
         const updatedQuestions = prevQuestions.map((question) => {
           if (question.id === parentId) {
             return {
@@ -55,7 +59,6 @@ const useQuestions = () => {
     });
   }, [autoNumberQuestions]);
 
-  // Recursive helper to add a child to the correct parent
   const addNestedChild = (questions, parentId, newQuestion) => {
     return questions.map((question) => {
       if (question.id === parentId) {
@@ -74,7 +77,6 @@ const useQuestions = () => {
     });
   };
 
-  // Function to update a specific question in the state
   const updateQuestion = useCallback((id, updates) => {
     setQuestions((prevQuestions) => {
       const updatedQuestions = prevQuestions.map((question) =>
@@ -89,7 +91,6 @@ const useQuestions = () => {
     });
   }, [autoNumberQuestions]);
 
-  // Recursive helper to update a nested question
   const updateNestedQuestion = (questions, id, updates) => {
     return questions.map((question) => {
       if (question.id === id) {
@@ -105,7 +106,6 @@ const useQuestions = () => {
     });
   };
 
-  // Function to delete a question and its children from the state
   const deleteQuestion = useCallback((id) => {
     setQuestions((prevQuestions) => {
       const updatedQuestions = prevQuestions.filter((question) => question.id !== id);
@@ -122,7 +122,6 @@ const useQuestions = () => {
     });
   }, [autoNumberQuestions]);
 
-  // Recursive helper to delete nested questions
   const filterNestedQuestions = (questions, id) => {
     return questions
       .filter((question) => question.id !== id)
@@ -143,7 +142,6 @@ const useQuestions = () => {
     });
   }, []);
 
-  // Return the state and functions
   return {
     questions,
     addQuestion,

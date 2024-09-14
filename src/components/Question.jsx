@@ -72,7 +72,10 @@ const Question = ({ question, addQuestion, deleteQuestion, updateQuestion, dragH
 
         {question.type === 'True/False' && answer === 'True' && (
           <button
-            onClick={() => addQuestion(question.id)}
+          onClick={(e) => {
+            e.preventDefault();
+            addQuestion(question.id);
+          }}
             className="mt-3 text-indigo-500 hover:text-indigo-600 transition-colors duration-200"
           >
             Add Nested Child Question

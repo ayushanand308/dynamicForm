@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Button to add a new question
 const AddQuestionButton = ({ onClick, isChild = false }) => {
   return (
     <div className="mt-4 sm:mt-6">

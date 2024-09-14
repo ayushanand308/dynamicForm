@@ -31,7 +31,6 @@ const DynamicForm = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 sm:p-10 bg-gradient-to-br from-blue-100 via-white to-blue-50 shadow-xl rounded-lg mt-10">
-      {/* Added modern gradient background */}
       {!isSubmitted ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <form onSubmit={handleSubmit} className="space-y-8">
