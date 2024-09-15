@@ -12,15 +12,11 @@ You can view the live demo of the dynamic form hosted at [https://dynamicquestio
 
    ```bash
    git clone https://github.com/ayushanand308/dynamicForm.git
-2. **Navigate to main directory:**
-
-   ```bash
-   cd gform
-3. **Install dependencies:**
+2. **Install dependencies:**
 
    ```bash
    npm install
-4. **Run the project:**
+3. **Run the project:**
 
    ```bash
    npm run dev
